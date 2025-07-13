@@ -1,265 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Class Schedule</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #00b894;
-            --info: #0984e3;
-            --warning: #fdcb6e;
-            --danger: #d63031;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 2rem;
-            color: var(--dark);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-weight: 600;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .schedule-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-        
-        .schedule-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            display: grid;
-            grid-template-columns: 100px repeat(5, 1fr);
-            font-weight: 500;
-            text-align: center;
-        }
-        
-        .time-column {
-            background: var(--secondary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            font-weight: 500;
-        }
-        
-        .schedule-grid {
-            display: grid;
-            grid-template-columns: 100px repeat(5, 1fr);
-            grid-gap: 1px;
-            background: #e0e0e0;
-        }
-        
-        .schedule-cell {
-            background: white;
-            padding: 1rem;
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .time-slot {
-            font-weight: 500;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        input {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 0.5rem;
-            width: 100%;
-            font-family: inherit;
-            margin-bottom: 0.5rem;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-family: inherit;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        button:hover {
-            background: #5a4bd1;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .day-header {
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .schedule-header, .schedule-grid {
-                grid-template-columns: 80px repeat(5, 1fr);
-            }
-            
-            .time-column {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-            
-            .schedule-cell {
-                padding: 0.5rem;
-                min-height: 60px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Personal Class Schedule</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #a29bfe;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --success: #00b894;
+      --info: #0984e3;
+      --warning: #fdcb6e;
+      --danger: #d63031;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 2rem;
+      color: var(--dark);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-weight: 600;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .schedule-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .schedule-header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr);
+      text-align: center;
+      font-weight: 500;
+    }
+    .time-column {
+      background: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr);
+      gap: 1px;
+      background: #e0e0e0;
+    }
+    .schedule-cell {
+      background: white;
+      padding: 1rem;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+    }
+    .schedule-cell input {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 0.5rem;
+      width: 100%;
+      font-family: inherit;
+    }
+    .schedule-cell input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    button:hover {
+      background: #5a4bd1;
+      transform: translateY(-2px);
+    }
+    .day-header {
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .schedule-header,
+      .schedule-grid {
+        grid-template-columns: 80px repeat(5, 1fr);
+      }
+      .time-column {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+      }
+      .schedule-cell {
+        padding: 0.5rem;
+        min-height: 60px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Class Schedule</h1>
-        
-        <div class="schedule-container" id="schedule">
-            <div class="schedule-header">
-                <div></div>
-                <div class="day-header">Monday</div>
-                <div class="day-header">Tuesday</div>
-                <div class="day-header">Wednesday</div>
-                <div class="day-header">Thursday</div>
-                <div class="day-header">Friday</div>
-            </div>
-            
-            <div class="schedule-grid">
-                <!-- Time slots will be generated by JavaScript -->
-            </div>
-        </div>
-        
-        <div class="controls">
-            <button id="saveBtn">Save Schedule</button>
-            <button id="pdfBtn">Generate PDF</button>
-        </div>
+  <div class="container">
+    <h1>My Weekly Class Schedule</h1>
+
+    <div class="schedule-container" id="schedule">
+      <div class="schedule-header">
+        <div></div>
+        <div class="day-header">Monday</div>
+        <div class="day-header">Tuesday</div>
+        <div class="day-header">Wednesday</div>
+        <div class="day-header">Thursday</div>
+        <div class="day-header">Friday</div>
+      </div>
+      <div class="schedule-grid"></div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const timeSlots = [
-                { time: '08:00 - 10:00', id: 'morning1' },
-                { time: '10:15 - 12:15', id: 'morning2' },
-                { time: '13:15 - 15:15', id: 'afternoon1' },
-                { time: '15:30 - 17:30', id: 'afternoon2' }
-            ];
-            
-            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-            const scheduleGrid = document.querySelector('.schedule-grid');
-            
-            // Generate schedule grid
-            timeSlots.forEach(slot => {
-                // Time column
-                const timeCell = document.createElement('div');
-                timeCell.className = 'time-column';
-                timeCell.textContent = slot.time;
-                scheduleGrid.appendChild(timeCell);
-                
-                // Day cells
-                days.forEach(day => {
-                    const cell = document.createElement('div');
-                    cell.className = 'schedule-cell';
-                    
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.placeholder = 'Enter class name';
-                    input.id = `${day}-${slot.id}`;
-                    
-                    // Load saved data if available
-                    const savedData = localStorage.getItem(input.id);
-                    if (savedData) {
-                        input.value = savedData;
-                    }
-                    
-                    cell.appendChild(input);
-                    scheduleGrid.appendChild(cell);
-                });
-            });
-            
-            // Save button
-            document.getElementById('saveBtn').addEventListener('click', function() {
-                const inputs = document.querySelectorAll('.schedule-cell input');
-                inputs.forEach(input => {
-                    localStorage.setItem(input.id, input.value);
-                });
-                
-                alert('Schedule saved successfully!');
-            });
-            
-            // PDF button
-            document.getElementById('pdfBtn').addEventListener('click', function() {
-                generatePDF();
-            });
-            
-            function generatePDF() {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm'
-                });
-                
-                // Add title
-                doc.setFontSize(20);
-                doc.setTextColor(108, 92, 231);
-                doc.text('My Weekly Class Schedule', 105, 15, { align: 'center' });
-                
-                // Capture the schedule as an image
-                html2canvas(document.getElementById('schedule')).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const imgWidth = 280; // A4 width in mm (landscape)
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-                    
-                    doc.addImage(imgData, 'PNG', 10, 20, imgWidth, imgHeight);
-                    doc.save('my_class_schedule.pdf');
-                });
-            }
+    <div class="controls">
+      <button id="saveBtn">Save</button>
+      <button id="pdfBtn">Download PDF</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const timeSlots = [
+        { time: '08:00 - 10:00', id: 'morning1' },
+        { time: '10:15 - 12:15', id: 'morning2' },
+        { time: '13:15 - 15:15', id: 'afternoon1' },
+        { time: '15:30 - 17:30', id: 'afternoon2' },
+      ];
+      const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+      const grid = document.querySelector('.schedule-grid');
+
+      timeSlots.forEach(slot => {
+        const timeCol = document.createElement('div');
+        timeCol.className = 'time-column';
+        timeCol.textContent = slot.time;
+        grid.appendChild(timeCol);
+
+        days.forEach(day => {
+          const cell = document.createElement('div');
+          cell.className = 'schedule-cell';
+
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.placeholder = 'e.g. Math - Room 2';
+          input.id = `${day}-${slot.id}`;
+
+          const stored = localStorage.getItem(input.id);
+          if (stored) input.value = stored;
+
+          input.addEventListener('input', () => {
+            localStorage.setItem(input.id, input.value);
+          });
+
+          cell.appendChild(input);
+          grid.appendChild(cell);
         });
-    </script>
+      });
+
+      document.getElementById('saveBtn').addEventListener('click', () => {
+        alert('Schedule saved to this browser!');
+      });
+
+      document.getElementById('pdfBtn').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+        html2canvas(document.getElementById('schedule')).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const imgWidth = 280;
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+          doc.setFontSize(20);
+          doc.text('My Weekly Class Schedule', 140, 15, { align: 'center' });
+          doc.addImage(imgData, 'PNG', 10, 20, imgWidth, imgHeight);
+          doc.save('class_schedule.pdf');
+        });
+      });
+    });
+  </script>
 </body>
 </html>
